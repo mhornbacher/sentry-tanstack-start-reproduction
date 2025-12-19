@@ -1,0 +1,39 @@
+{
+  "name": "sentry-reproduction",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "check": "biome check --write .",
+    "ruler:apply": "pnpm dlx @intellectronica/ruler@latest apply --local-only",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "db:push": "turbo -F @sentry-reproduction/db db:push",
+    "db:studio": "turbo -F @sentry-reproduction/db db:studio",
+    "db:generate": "turbo -F @sentry-reproduction/db db:generate",
+    "db:migrate": "turbo -F @sentry-reproduction/db db:migrate",
+    "db:start": "turbo -F @sentry-reproduction/db db:start",
+    "db:watch": "turbo -F @sentry-reproduction/db db:watch",
+    "db:stop": "turbo -F @sentry-reproduction/db db:stop",
+    "db:down": "turbo -F @sentry-reproduction/db db:down"
+  },
+  "dependencies": {
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "turbo": "^2.6.3",
+    "@biomejs/biome": "2.3.10",
+    "ultracite": "6.4.2",
+    "typescript": "^5",
+    "@types/node": "^22.13.11"
+  },
+  "packageManager": "pnpm@10.26.0"
+}
