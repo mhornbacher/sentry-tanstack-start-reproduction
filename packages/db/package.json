@@ -20,15 +20,15 @@
     "db:down": "docker compose down"
   },
   "devDependencies": {
+    "@sentry-reproduction/config": "workspace:*",
+    "@types/pg": "^8.16.0",
     "drizzle-kit": "^0.31.8",
-    "@types/pg": "^8.15.6",
-    "typescript": "^5",
-    "@sentry-reproduction/config": "workspace:*"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
+    "dotenv": "catalog:",
     "drizzle-orm": "^0.45.1",
     "pg": "^8.16.3",
-    "dotenv": "catalog:",
     "zod": "catalog:"
   }
 }

@@ -4,13 +4,13 @@ packages:
 
 catalog:
   '@better-auth/expo': ^1.4.7
-  '@orpc/client': ^1.12.2
+  '@orpc/client': ^1.13.0
   '@orpc/openapi': 1.13.0
-  '@orpc/server': ^1.12.2
-  '@orpc/tanstack-query': ^1.12.2
+  '@orpc/server': ^1.13.0
+  '@orpc/tanstack-query': ^1.13.0
   '@orpc/zod': 1.13.0
   '@tanstack/react-query': ^5.90.12
   better-auth: ^1.4.7
-  dotenv: ^17.2.2
-  hono: ^4.8.2
-  zod: ^4.1.13
+  dotenv: ^17.2.3
+  hono: ^4.11.1
+  zod: ^4.2.1
