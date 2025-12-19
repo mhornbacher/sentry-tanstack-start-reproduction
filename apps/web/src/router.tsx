@@ -33,6 +33,8 @@ export const getRouter = () => {
       // send logs
       enableLogs: true,
 
+      tracesSampleRate: 1.0,
+
       spotlight: process.env.NODE_ENV === "development",
       environment: process.env.NODE_ENV || "production",
 
