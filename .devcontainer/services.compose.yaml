@@ -1,0 +1,83 @@
+name: sentry-reproduction
+
+services:
+  # AI enabled OTEL debugging, in theory.
+  spotlight:
+    image: ghcr.io/getsentry/spotlight:latest
+    ports:
+      - 8969:8969
+  # Loki, Grafana, Tempo, Mimir stack for local OTEL observability
+  # lgtm:
+  #   image: grafana/otel-lgtm:latest
+  #   ports:
+  #     - 3003:3000 # Web UI
+  #     - 4317:4317 # OTEL GRPC
+  #     - 4318:4318 # OTEL HTTP
+
+  # PostgreSQL database. Acts as the source of truth for the entire application.
+  # Uses the TimescaleDB image for AI support.
+  db:
+    image: timescale/timescaledb-ha:pg18
+    ports:
+      - 5432:5432/tcp
+    user: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: kiddom
+      PGDATA: /home/postgres/pgdata/data
+      OLLAMA_HOST: http://host.docker.internal:11434
+    env_file:
+      - ../.env
+    # Logical WAL is required for ElectricSQL and PowerSync
+    command: ["-c", "listen_addresses=*", "-c", "wal_level=logical"]
+    volumes:
+      - db-data:/home/postgres/pgdata/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PowerSync is a real-time data synchronization engine that we use alongside Tanstack DB.
+  # PowerSync has worse scaling characteristics than ElectricSQL but allows for persisted offline writes and more complex sync rules. This makes it ideal for the classroom experience while ElectricSQL is more suitable for the admin experience.
+  # powersync:
+  #   depends_on:
+  #     # mongo-rs-init:
+  #     #   condition: service_completed_successfully
+  #     db: # This is not required, but is nice to have
+  #       condition: service_healthy
+  #   image: journeyapps/powersync-service:latest
+  #   command: ["start", "-r", "unified"]
+  #   volumes:
+  #     - ./powersync/config.yaml:/config/config.yaml
+  #   environment:
+  #     POWERSYNC_CONFIG_PATH: /config/config.yaml
+  #   env_file:
+  #     - ../.env
+  #   ports:
+  #     - 5430:8080
+  #   expose:
+  #     - 9090 # Prometheus port for metrics, kept within the network
+
+  # ElectricSQL is a real-time database that we use alongside PowerSync.
+  # ElectricSQL has better scaling characteristics than PowerSync but does not allow for persisted offline writes and more complex sync rules. This makes it ideal for the admin experience while PowerSync is more suitable for the classroom experience.
+  # electric:
+  #   image: docker.io/electricsql/electric:latest
+  #   ports:
+  #     - 5431:3000 # we use 3000 for the web UI, database range starts at 5400
+  #   environment:
+  #     DATABASE_URL: postgresql://postgres:password@db:5432/kiddom
+  #     ELECTRIC_INSECURE: true
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+
+volumes:
+  db-data:
+  redis-data:
+  mongo-data:
+
+networks:
+  kiddom:

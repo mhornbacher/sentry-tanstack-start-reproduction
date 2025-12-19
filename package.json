@@ -22,7 +22,12 @@
     "db:start": "turbo -F @sentry-reproduction/db db:start",
     "db:watch": "turbo -F @sentry-reproduction/db db:watch",
     "db:stop": "turbo -F @sentry-reproduction/db db:stop",
-    "db:down": "turbo -F @sentry-reproduction/db db:down"
+    "db:down": "turbo -F @sentry-reproduction/db db:down",
+    "services:start": "docker compose -f .devcontainer/services.compose.yaml up -d",
+    "services:watch": "docker compose -f .devcontainer/services.compose.yaml up",
+    "services:stop": "docker compose -f .devcontainer/services.compose.yaml stop",
+    "services:down": "docker compose -f .devcontainer/services.compose.yaml down -v",
+    "services:destroy": "docker compose -f .devcontainer/services.compose.yaml down -v"
   },
   "dependencies": {
     "dotenv": "catalog:",
