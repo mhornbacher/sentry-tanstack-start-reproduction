@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/tanstackstart-react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -45,6 +46,29 @@ function HomeComponent() {
             </span>
           </div>
         </section>
+        <button
+          onClick={async () => {
+            await Sentry.startSpan(
+              {
+                name: "Example Frontend Span",
+                op: "test",
+              },
+              async (span) => {
+                try {
+                  const res = await fetch("/api/sentry-example");
+                  if (!res.ok) {
+                    throw new Error("Sentry Example Frontend Error");
+                  }
+                } finally {
+                  span.end();
+                }
+              }
+            );
+          }}
+          type="button"
+        >
+          Break the world
+        </button>
       </div>
     </div>
   );

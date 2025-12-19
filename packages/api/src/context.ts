@@ -1,13 +1,8 @@
 import { auth } from "@sentry-reproduction/auth";
-import type { Context as HonoContext } from "hono";
 
-export type CreateContextOptions = {
-  context: HonoContext;
-};
-
-export async function createContext({ context }: CreateContextOptions) {
+export async function createContext({ req }: { req: Request }) {
   const session = await auth.api.getSession({
-    headers: context.req.raw.headers,
+    headers: req.headers,
   });
   return {
     session,

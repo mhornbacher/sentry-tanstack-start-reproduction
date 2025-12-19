@@ -1,0 +1,46 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "web",
+      "configurations": [
+        "web - server",
+        "web - client"
+      ]
+    }
+  ],
+  "configurations": [
+    {
+      "name": "web - server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm run dev",
+      "cwd": "${workspaceFolder}/apps/web",
+    },
+    {
+      "name": "web - client",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/apps/web",
+      // "sourceMaps": true,
+      // "sourceMapPathOverrides": {
+      //   "webpack:///src/*": "${webRoot}/src/*"
+      // }
+    }
+    // {
+    //   "request": "launch",
+    //   "name": "documents",
+    //   "type": "node",
+    //   "program": "${workspaceFolder}/apps/documents/src/main.ts",
+    //   "cwd": "${workspaceFolder}/apps/documents",
+    //   "env": {},
+    //   "runtimeExecutable": "/opt/homebrew/bin/deno",
+    //   "runtimeArgs": ["run", "--inspect-wait", "--allow-all"],
+    //   "attachSimplePort": 9229
+    // }
+  ]
+}
