@@ -1,5 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 import {
   DropdownMenu,
@@ -24,7 +23,7 @@ export default function UserMenu() {
 
   if (!session) {
     return (
-      <Button variant="outline" asChild>
+      <Button asChild variant="outline">
         <Link to="/login">Sign In</Link>
       </Button>
     );
@@ -41,7 +40,6 @@ export default function UserMenu() {
         <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Button
-            variant="destructive"
             className="w-full"
             onClick={() => {
               authClient.signOut({
@@ -54,6 +52,7 @@ export default function UserMenu() {
                 },
               });
             }}
+            variant="destructive"
           >
             Sign Out
           </Button>

@@ -1,8 +1,7 @@
-import type { AppRouterClient } from "@sentry-reproduction/api/routers/index";
-
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
+import type { AppRouterClient } from "@sentry-reproduction/api/routers/index";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 
 import { authClient } from "@/lib/auth-client";

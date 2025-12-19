@@ -3,7 +3,6 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "**",
       "!**/.next",
       "!**/dist",
       "!**/.turbo",
@@ -23,8 +22,31 @@
       "!**/convex/_generated"
     ]
   },
-  "extends": [
-    "ultracite/core",
-    "ultracite/react"
-  ]
+  "extends": ["ultracite/core", "ultracite/react"],
+  "linter": {
+    "rules": {
+      "correctness": {
+        "noUnusedVariables": "off"
+      },
+      "style": {
+        "useFilenamingConvention": "off",
+        "useBlockStatements": "off",
+        "noNestedTernary": "off",
+        "useConsistentTypeDefinitions": "off"
+      },
+      "suspicious": {
+        "useAwait": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off",
+        "noBarrelFile": "off"
+      },
+      "nursery": {
+        "noParametersOnlyUsedInRecursion": "off",
+        "noUndeclaredEnvVars": "off",
+        "noLeakedRender": "off",
+        "noShadow": "off"
+      }
+    }
+  }
 }

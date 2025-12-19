@@ -1,4 +1,4 @@
-import { expo } from '@better-auth/expo';
+import { expo } from "@better-auth/expo";
 import { db } from "@sentry-reproduction/db";
 import * as schema from "@sentry-reproduction/db/schema/auth";
 import { betterAuth } from "better-auth";
@@ -8,7 +8,7 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
 
-    schema: schema,
+    schema,
   }),
   trustedOrigins: [process.env.CORS_ORIGIN || "", "mybettertapp://", "exp://"],
   emailAndPassword: {
@@ -21,5 +21,5 @@ export const auth = betterAuth({
       httpOnly: true,
     },
   },
-  plugins: [expo()]
+  plugins: [expo()],
 });

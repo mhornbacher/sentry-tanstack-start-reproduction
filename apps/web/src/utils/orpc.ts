@@ -1,7 +1,6 @@
-import type { RouterClient } from "@orpc/server";
-
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
+import type { RouterClient } from "@orpc/server";
 import { createRouterClient } from "@orpc/server";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import { createContext } from "@sentry-reproduction/api/context";
@@ -26,10 +25,8 @@ export const queryClient = new QueryClient({
 const getORPCClient = createIsomorphicFn()
   .server(() =>
     createRouterClient(appRouter, {
-      context: async ({ req }) => {
-        return createContext({ context: req });
-      },
-    }),
+      context: async ({ req }) => createContext({ context: req }),
+    })
   )
   .client((): RouterClient<typeof appRouter> => {
     const link = new RPCLink({
